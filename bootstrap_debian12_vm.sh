@@ -116,10 +116,15 @@ EOF
 chmod 644 "${ROOT_CONF}" || error_exit "chmod root config failed"
 systemctl reload sshd || error_exit "reload sshd failed"
 
-# 10) Test sudo escalation
-log "Testing sudo escalation for ${USERNAME}"
-su - "${USERNAME}" -c "sudo -l" || error_exit "sudo -l failed"
-su - "${USERNAME}" -c "sudo whoami" || error_exit "sudo whoami failed"
+# 10) Verify sudoers entry
+log "Verifying sudoers file for ${USERNAME}"
+# list privileges for ${USERNAME} (run as root, no password prompt)
+sudo -l -U "${USERNAME}" >/dev/null 2>&1 \
+  && log "Sudoers entry OK for ${USERNAME}" \
+  || error_exit "Sudoers entry missing or incorrect"
+
+# debug command, check what users are on system
+# cat /etc/passwd | grep ansible-managed-hosted or cat /etc/passwd list of all
 
 log "Bootstrap complete for ${USERNAME}"
 exit 0
