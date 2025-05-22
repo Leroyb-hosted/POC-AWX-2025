@@ -9,7 +9,13 @@
 # - Hardens SSH and access from IP
 # Usage:
 #  sudo wget -O /home/leroyadmin-hosted/bootstrap_debian12_vm.sh https://raw.githubusercontent.com/Leroyb-hosted/POC-AWX-2025/main/bootstrap_debian12_vm.sh && sudo bash /home/leroyadmin-hosted/bootstrap_debian12_vm.sh
+#  sudo wget -N -O ./bootstrap_debian12_vm.sh https://raw.githubusercontent.com/Leroyb-hosted/POC-AWX-2025/main/bootstrap_debian12_vm.sh && sudo bash ./bootstrap_debian12_vm.sh
+
+# Change user path or dir
+# Only downloads if remote file is newer than on host!
+
 # Note: Run as root. Exits on error.
+# debug check if key has been added sudo nano /home/ansible-managed-hosted/.ssh/authorized_keys
 #-------------------------------------------------------------------------------
 
 #===============================================================================
@@ -72,16 +78,16 @@ wget -q -O "${AUTH_KEYS}" "${REPO_URL}" || error_exit "wget public key failed"
 log "Setting permissions on authorized_keys"
 chown "${USERNAME}:${GROUPNAME}" "${AUTH_KEYS}" && chmod 600 "${AUTH_KEYS}"
 
-# 6) Sudoers hardening + logging
+# 6) Sudoers hardening + logging (GROUP-BASED)
 SUDO_LOG_DIR=/var/log/sudo-ansible
-SUDOERS_FILE=/etc/sudoers.d/${USERNAME}
-log "Configuring sudoers"
+SUDOERS_FILE=/etc/sudoers.d/${GROUPNAME}
+log "Configuring sudoers for group: ${GROUPNAME}"
 mkdir -p "${SUDO_LOG_DIR}" || error_exit "mkdir sudo log dir failed"
 chown root:root "${SUDO_LOG_DIR}" && chmod 750 "${SUDO_LOG_DIR}"
 cat <<EOF > "${SUDOERS_FILE}"
-# Allow ${USERNAME} to sudo to root (password required)
-Defaults:${USERNAME} log_input, log_output, iolog_dir=${SUDO_LOG_DIR}
-${USERNAME} ALL=(ALL) ALL
+# Allow group ${GROUPNAME} to sudo to root (password required)
+Defaults:%${GROUPNAME} log_input,log_output,iolog_dir=${SUDO_LOG_DIR}
+%${GROUPNAME} ALL=(ALL) ALL
 EOF
 chmod 440 "${SUDOERS_FILE}" || error_exit "chmod sudoers failed"
 
