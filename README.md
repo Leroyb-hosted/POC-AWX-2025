@@ -10,7 +10,7 @@ Deze repository bevat scripts, configuraties en handleidingen voor het testen en
   Verzameling van links naar best practices, code style sheets, cursussen en beheer-taken.
 
 - **Public Key AWX Automatiseringssysteem**  
-  Publiek SSH-key bestand voor AWX:  
+  Public SSH-key bestand voor AWX:  
   `public_keys/awx_service_deploy_key_eddsa_key_20250513.pub`
 
 - **Bootstrap Script (GitHub)**  
@@ -23,7 +23,7 @@ Deze repository bevat scripts, configuraties en handleidingen voor het testen en
 
 - **Static IP Configuratie Script**  
   `script-set_static_IP_systemd.sh`  
-  Bash-script om een statisch IP-adres in te stellen via systemd-networkd.
+  Bash script om een statisch IP-adres in te stellen via systemd-networkd.
 
 - **IaC voor AWX Tower**  
   Ansible playbooks, rollen en configuratievoorbeelden voor het provisionen en beheren van AWX Tower.
