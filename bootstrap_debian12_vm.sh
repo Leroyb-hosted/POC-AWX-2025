@@ -43,7 +43,7 @@
 #===============================================================================
 # VARIABLES (customize before running)
 #===============================================================================
-USERNAME="${1:-ansible-managed-hosted}"  # Uses first argument, else defaults to service user. Change here if needed.
+USERNAME="${1:-ansible-managed-hosted}"  #defaults to service user.
 GROUPNAME="service-account" # group to create
 GITHUB_USER=Leroyb-hosted
 GITHUB_REPO=POC-AWX-2025
