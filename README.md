@@ -1,4 +1,4 @@
-# PoC AWX Automatiserings-Testrepository
+# PoC AWX - Testrepository
 
 Deze repository bevat scripts, configuraties en handleidingen voor het testen en uitrollen van een Proof of Concept (PoC) rondom **AWX automatisering** op Debian 12 servers.
 
